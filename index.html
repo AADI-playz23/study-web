@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Web Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%),
+            url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            transition: background 0.6s;
+        }
+        /* Add a subtle animated overlay to the background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(120deg, rgba(99,102,241,0.08) 0%, rgba(16,185,129,0.08) 100%);
+            z-index: 0;
+            pointer-events: none;
+            animation: bgMove 12s linear infinite alternate;
+        }
+        @keyframes bgMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        .container {
+            max-width: 650px;
+            margin: 60px auto;
+            background: rgba(255,255,255,0.92);
+            border-radius: 22px;
+            box-shadow: 0 8px 32px rgba(55,48,163,0.13);
+            padding: 48px 36px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s cubic-bezier(.39,.575,.56,1.000);
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            color: #4338ca;
+            margin-bottom: 16px;
+            font-size: 2.7rem;
+            letter-spacing: 1px;
+            font-weight: 800;
+            text-shadow: 0 2px 8px #e0e7ff;
+        }
+        p {
+            color: #6366f1;
+            font-size: 1.25rem;
+            margin-bottom: 32px;
+            font-weight: 500;
+        }
+        .cta {
+            display: inline-block;
+            background: linear-gradient(90deg, #6366f1 60%, #10b981 100%);
+            color: #fff;
+            padding: 16px 36px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.15rem;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 12px rgba(99,102,241,0.13);
+            border: none;
+            letter-spacing: 0.5px;
+        }
+        .cta:hover {
+            background: linear-gradient(90deg, #4338ca 60%, #059669 100%);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 24px rgba(99,102,241,0.18);
+        }
+        .back-btn {
+            background: #f1f5f9;
+            color: #6366f1;
+            border: 1.5px solid #a5b4fc;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            margin-right: auto;
+            margin-left: 0;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            box-shadow: 0 1px 4px rgba(99,102,241,0.07);
+        }
+        .back-btn:hover {
+            background: #6366f1;
+            color: #fff;
+        }
+        label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            cursor: pointer;
+            font-size: 1.08rem;
+            color: #3730a3;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        label:hover {
+            color: #6366f1;
+        }
+        input[type="checkbox"] {
+            margin-right: 12px;
+            accent-color: #6366f1;
+            width: 20px;
+            height: 20px;
+            transition: accent-color 0.2s;
+        }
+        #tabs {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 28px;
+            margin-top: 8px;
+        }
+        .tab-btn {
+            padding: 10px 22px;
+            font-size: 1.08rem;
+            margin: 0 4px;
+            background: linear-gradient(90deg, #6366f1 60%, #10b981 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.09);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: linear-gradient(90deg, #4338ca 60%, #059669 100%);
+            transform: scale(1.06);
+        }
+        #tab-content {
+            min-height: 140px;
+            text-align: left;
+            max-width: 650px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.93);
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(99,102,241,0.07);
+            padding: 32px 24px 18px 24px;
+            margin-bottom: 18px;
+            animation: fadeInUp 0.7s cubic-bezier(.39,.575,.56,1.000);
+        }
+        #aiChatBotContainer {
+            max-width: 600px;
+            width: 98vw;
+            margin: 0 auto;
+            background: #f8fafc;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(99,102,241,0.13);
+            padding: 32px 24px 20px 24px;
+        }
+        #aiChatHistory {
+            background: #e0e7ff;
+            padding: 22px 18px;
+            border-radius: 12px;
+            min-height: 320px;
+            max-height: 520px;
+            overflow-y: auto;
+            margin-bottom: 18px;
+            font-size: 1.13rem;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .ai-msg {
+            background: #6366f1;
+            color: #fff;
+            align-self: flex-start;
+            padding: 10px 16px;
+            border-radius: 16px 16px 16px 4px;
+            max-width: 80%;
+            margin-bottom: 2px;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.07);
+            word-break: break-word;
+        }
+        .user-msg {
+            background: #fff;
+            color: #3730a3;
+            align-self: flex-end;
+            padding: 10px 16px;
+            border-radius: 16px 16px 4px 16px;
+            max-width: 80%;
+            margin-bottom: 2px;
+            border: 1px solid #c7d2fe;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.04);
+            word-break: break-word;
+        }
+        #aiChatForm {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        #aiChatInput {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1.5px solid #a5b4fc;
+            font-size: 1.08rem;
+            background: #f1f5f9;
+            transition: border 0.2s;
+        }
+        #aiChatInput:focus {
+            border: 1.5px solid #6366f1;
+            outline: none;
+            background: #fff;
+        }
+        #aiChatForm button.cta {
+            padding: 12px 24px;
+            font-size: 1.08rem;
+            border-radius: 8px;
+        }
+        /* Floating chat bubble styles */
+        #chatBubbleBtn {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 9999;
+            background: #6366f1;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 68px;
+            height: 68px;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.18);
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+            animation: popIn 0.7s cubic-bezier(.39,.575,.56,1.000);
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.7); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        #chatBubbleBtn:active {
+            transform: scale(0.93);
+        }
+        #chatModalOverlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(30,41,59,0.18);
+            z-index: 9998;
+            display: none;
+        }
+        #chatModal {
+            position: fixed;
+            bottom: 100px;
+            right: 40px;
+            z-index: 10000;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(30,41,59,0.18);
+            padding: 0;
+            min-width: 370px;
+            max-width: 98vw;
+            width: 420px;
+            display: none;
+        }
+        #chatModal .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6366f1;
+            cursor: pointer;
+            z-index: 10001;
+        }
+        /* In the routine tab, update #aiChatBotContainer, #aiChatHistory, #aiChatForm, #aiChatInput styles for larger chat box */
+        #tab-content #aiChatBotContainer {
+            max-width: 600px !important;
+            width: 98vw;
+            margin: 0 auto;
+            background: #f8fafc;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(99,102,241,0.13);
+            padding: 32px 24px 20px 24px;
+        }
+        #tab-content #aiChatHistory {
+            background: #e0e7ff;
+            padding: 22px 18px;
+            border-radius: 12px;
+            min-height: 320px;
+            max-height: 520px;
+            overflow-y: auto;
+            margin-bottom: 18px;
+            font-size: 1.13rem;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        #tab-content #aiChatForm {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        #tab-content #aiChatInput {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1.5px solid #a5b4fc;
+            font-size: 1.08rem;
+            background: #f1f5f9;
+            transition: border 0.2s;
+        }
+        #tab-content #aiChatInput:focus {
+            border: 1.5px solid #6366f1;
+            outline: none;
+            background: #fff;
+        }
+        #tab-content #aiChatForm button.cta {
+            padding: 12px 24px;
+            font-size: 1.08rem;
+            border-radius: 8px;
+        }
+        /* Add a decorative SVG wave at the top */
+        body::after {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 120px;
+            background: url('data:image/svg+xml;utf8,<svg width="100%25" height="100%25" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="%236366f1" fill-opacity="0.13" d="M0,160L60,170.7C120,181,240,203,360,197.3C480,192,600,160,720,133.3C840,107,960,85,1080,101.3C1200,117,1320,171,1380,197.3L1440,224L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>');
+            background-size: cover;
+            z-index: 1;
+            pointer-events: none;
+        }
+        /* Add a fade-in effect to all .container and #tab-content */
+        .container, #tab-content {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(.39,.575,.56,1.000) forwards;
+        }
+        /* Add interactive tab switching animation */
+        .tab-btn {
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            box-shadow: 0 4px 16px rgba(99,102,241,0.13);
+        }
+        /* Add a little bounce to the Go button */
+        #goBtn {
+            animation: bounceIn 1.2s cubic-bezier(.39,.575,.56,1.000);
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.7); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        /* Add a profile/mascot image to the home page */
+        #home-container::before {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 18px auto;
+            background: url('https://cdn-icons-png.flaticon.com/512/3135/3135768.png') no-repeat center center/cover;
+            border-radius: 50%;
+            box-shadow: 0 2px 12px rgba(99,102,241,0.13);
+            opacity: 0.95;
+        }
+        /* Add a subtle hover effect to all input fields */
+        input[type="text"], input[type="number"], select {
+            transition: box-shadow 0.2s, border 0.2s;
+        }
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            box-shadow: 0 2px 8px rgba(99,102,241,0.13);
+            border: 1.5px solid #6366f1;
+        }
+        /* Add a floating animated sparkle effect */
+        @keyframes sparkle {
+            0% { opacity: 0; transform: translateY(0) scale(0.7); }
+            50% { opacity: 1; transform: translateY(-20px) scale(1.1); }
+            100% { opacity: 0; transform: translateY(-40px) scale(0.7); }
+        }
+        .sparkle {
+            position: fixed;
+            left: calc(50% + 120px);
+            top: 80px;
+            width: 32px;
+            height: 32px;
+            background: url('https://cdn-icons-png.flaticon.com/512/616/616494.png') no-repeat center center/contain;
+            opacity: 0.7;
+            pointer-events: none;
+            animation: sparkle 2.5s infinite linear;
+            z-index: 10;
+        }
+        /* Add a class to hide elements */
+        .hide-when-home { display: none !important; }
+        /* Thinking animation styles */
+        .thinking-dots {
+            display: inline-block;
+            font-size: 1.3em;
+            line-height: 1;
+        }
+        .thinking-dots span {
+            display: inline-block;
+            animation: dotBounce 0.6s infinite alternate;
+        }
+        @keyframes dotBounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="home-container">
+        <h1>Welcome to Study Web</h1>
+        <p>Your personal space to organize notes, tasks, and resources for effective learning.</p>
+        <ul id="feature-list" style="list-style:none;padding:0;margin:0 0 32px 0;max-width:420px;margin-left:auto;margin-right:auto;">
+            <li style="background:linear-gradient(90deg,#6366f1 60%,#10b981 100%);color:#fff;padding:14px 22px;margin-bottom:14px;border-radius:12px;box-shadow:0 2px 8px rgba(99,102,241,0.09);font-size:1.13rem;display:flex;align-items:center;gap:12px;"><span style='font-size:1.4em;'>⏰</span> Live Clock</li>
+            <li style="background:linear-gradient(90deg,#10b981 60%,#6366f1 100%);color:#fff;padding:14px 22px;margin-bottom:14px;border-radius:12px;box-shadow:0 2px 8px rgba(99,102,241,0.09);font-size:1.13rem;display:flex;align-items:center;gap:12px;"><span style='font-size:1.4em;'>💡</span> Motivational Quotes</li>
+            <li style="background:linear-gradient(90deg,#6366f1 60%,#f59e42 100%);color:#fff;padding:14px 22px;margin-bottom:14px;border-radius:12px;box-shadow:0 2px 8px rgba(99,102,241,0.09);font-size:1.13rem;display:flex;align-items:center;gap:12px;"><span style='font-size:1.4em;'>📅</span> AI-Powered Daily Routine Generator</li>
+            <li style="background:linear-gradient(90deg,#f59e42 60%,#6366f1 100%);color:#fff;padding:14px 22px;margin-bottom:0;border-radius:12px;box-shadow:0 2px 8px rgba(99,102,241,0.09);font-size:1.13rem;display:flex;align-items:center;gap:12px;"><span style='font-size:1.4em;'>🤖</span> AI Study Helper Chat Bot</li>
+        </ul>
+        <a href="#" class="cta" id="getStartedBtn">Get Started</a>
+    </div>
+    <div class="container" id="features-container" style="display:none;">
+        <button class="back-btn" id="backToHomeBtn">Back</button>
+        <h1>Choose Your Features</h1>
+        <form id="featuresForm" style="text-align:left; max-width:400px; margin:0 auto;">
+            <div>
+                <label>
+                    <input type="checkbox" name="feature" value="clock"> Clock
+                </label>
+                <label>
+                    <input type="checkbox" name="feature" value="quotes"> Motivational Quotes
+                </label>
+                <label>
+                    <input type="checkbox" name="feature" value="routine"> Daily Routine
+                </label>
+                <div style="text-align:center; margin-top:32px;">
+                    <button type="button" class="cta" id="goBtn">Go</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container" id="tabs-container" style="display:none;">
+        <button class="back-btn" id="backToFeaturesBtn">Back</button>
+        <div id="tabs"></div>
+        <div id="tab-content"></div>
+    </div>
+    <button id="chatBubbleBtn" title="Chat with AI">💬</button>
+    <div id="chatModalOverlay"></div>
+    <div id="chatModal">
+        <button class="close-btn" title="Close">&times;</button>
+        <button class="back-btn" id="chatModalBackBtn" style="position:absolute;top:10px;left:18px;z-index:10001;">Back</button>
+        <div id="aiChatBotContainer" style="margin:0;box-shadow:none;max-width:none;width:100%;padding:24px 12px 12px 12px;"></div>
+    </div>
+    <script>
+        const getStartedBtn = document.getElementById('getStartedBtn');
+        const homeContainer = document.getElementById('home-container');
+        const featuresContainer = document.getElementById('features-container');
+        const goBtn = document.getElementById('goBtn');
+        const featuresForm = document.getElementById('featuresForm');
+        const tabsContainer = document.getElementById('tabs-container');
+        const tabsDiv = document.getElementById('tabs');
+        const tabContent = document.getElementById('tab-content');
+
+        const featureMap = {
+            clock: {
+                label: 'Clock',
+                content: () => `
+                    <div id='clockArea' style='text-align:center;'>
+                        <div style='display:flex;justify-content:center;gap:16px;margin-bottom:18px;'>
+                            <button id='toggleClockType' class='cta' style='padding:8px 18px;font-size:1rem;'>Switch to Analog</button>
+                            <button id='toggleClockTheme' class='cta' style='padding:8px 18px;font-size:1rem;background:#3730a3;'>Toggle Theme</button>
+                        </div>
+                        <div id='clockDisplay' style='font-size:2.2rem;'></div>
+                        <div id='analogClock' style='display:none;margin:0 auto;width:160px;height:160px;position:relative;'></div>
+                        <div style='margin-top:18px;'>
+                            <input type='time' id='alarmTime' style='padding:8px 12px;border-radius:8px;border:1.5px solid #a5b4fc;font-size:1.08rem;'>
+                            <button id='setAlarmBtn' class='cta' style='padding:8px 18px;font-size:1rem;'>Set Alarm</button>
+                            <span id='alarmStatus' style='margin-left:12px;font-size:1.05rem;color:#10b981;'></span>
+                        </div>
+                    </div>
+                `
+            },
+            quotes: { 
+                label: 'Motivational Quotes', 
+                content: () => `
+                    <div id='quoteDisplay' style='font-size:1.2rem;margin-bottom:18px;'></div>
+                    <button id='generateQuoteBtn' class='cta' style='padding:10px 24px;font-size:1.08rem;'>Generate</button>
+                ` 
+            },
+            routine: {
+                label: 'Daily Routine',
+                content: () => `
+                    <form id='routineFormLocal' style='text-align:left;max-width:340px;margin:0 auto;'>
+                        <label>Class:<br><input type='text' name='class' required style='width:100%;margin-bottom:10px;'></label>
+                        <label>Type of Exam:<br><input type='text' name='exam' required style='width:100%;margin-bottom:10px;'></label>
+                        <label>Gender:<br>
+                            <select name='gender' required style='width:100%;margin-bottom:10px;'>
+                                <option value=''>Select</option>
+                                <option value='male'>Male</option>
+                                <option value='female'>Female</option>
+                                <option value='other'>Other</option>
+                            </select>
+                        </label>
+                        <label>How many hours you want to study:<br><input type='number' name='hours' min='1' max='24' required style='width:100%;margin-bottom:10px;'></label>
+                        <button type='submit' class='cta' style='width:100%;margin-top:10px;background:#10b981;'>Generate Routine (AI ChatBot)</button>
+                    </form>
+                    <div id='routineResultLocal' style='margin-top:20px;'></div>
+                    <hr style='margin:32px 0;'>
+                    <div id='aiChatBotContainer' style='max-width:340px;margin:0 auto;'>
+                        <h3>AI Study Helper</h3>
+                        <div id='aiChatHistory' style='background:#f3f4f6;padding:12px;border-radius:8px;min-height:60px;max-height:180px;overflow-y:auto;margin-bottom:10px;'></div>
+                        <form id='aiChatForm' style='display:flex;gap:8px;'>
+                            <input type='text' id='aiChatInput' placeholder='Ask for help or what to study now...' style='flex:1;padding:8px;border-radius:6px;border:1px solid #ccc;'>
+                            <button type='submit' class='cta' style='padding:8px 16px;font-size:1rem;'>Send</button>
+                        </form>
+                    </div>
+                `
+            }
+        };
+
+        function setFeatureControlsVisibility(show) {
+            document.querySelectorAll('.hide-when-home').forEach(el => {
+                el.style.display = show ? '' : 'none';
+            });
+        }
+
+        if(getStartedBtn) {
+            getStartedBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                homeContainer.style.display = 'none';
+                featuresContainer.style.display = 'block';
+                setFeatureControlsVisibility(true);
+            });
+        }
+
+        if(goBtn) {
+            goBtn.addEventListener('click', function() {
+                const checked = Array.from(featuresForm.elements['feature'])
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+                if (checked.length === 0) return;
+                featuresContainer.style.display = 'none';
+                tabsContainer.style.display = 'block';
+                // Build tabs
+                tabsDiv.innerHTML = '';
+                checked.forEach((feature, idx) => {
+                    const btn = document.createElement('button');
+                    btn.textContent = featureMap[feature].label;
+                    btn.className = 'tab-btn';
+                    btn.onclick = () => showTab(feature);
+                    if(idx === 0) btn.classList.add('active');
+                    tabsDiv.appendChild(btn);
+                });
+                // Show first tab by default
+                showTab(checked[0]);
+            });
+        }
+
+        function showTab(feature) {
+            tabContent.innerHTML = featureMap[feature].content();
+            // Special: live clock
+            if(feature === 'clock') {
+                let isAnalog = false;
+                let isDark = false;
+                const clockDisplay = document.getElementById('clockDisplay');
+                const analogClock = document.getElementById('analogClock');
+                const toggleClockType = document.getElementById('toggleClockType');
+                const toggleClockTheme = document.getElementById('toggleClockTheme');
+                const alarmTime = document.getElementById('alarmTime');
+                const setAlarmBtn = document.getElementById('setAlarmBtn');
+                const alarmStatus = document.getElementById('alarmStatus');
+                let alarmSet = null;
+                let alarmTimeout = null;
+                let alarmAudio = null;
+                // Analog clock rendering
+                function renderAnalogClock(date) {
+                    analogClock.innerHTML = `
+                        <svg width='160' height='160' viewBox='0 0 160 160' style='background:${isDark ? '#222' : '#fff'};border-radius:50%;box-shadow:0 2px 12px rgba(99,102,241,0.13);'>
+                            <circle cx='80' cy='80' r='75' fill='${isDark ? '#222' : '#fff'}' stroke='#6366f1' stroke-width='4'/>
+                            <g id='clockHands'></g>
+                            <circle cx='80' cy='80' r='6' fill='#6366f1'/>
+                        </svg>
+                    `;
+                    const hands = analogClock.querySelector('#clockHands');
+                    const h = date.getHours() % 12;
+                    const m = date.getMinutes();
+                    const s = date.getSeconds();
+                    // Angles
+                    const hourAngle = (h + m/60) * 30;
+                    const minAngle = (m + s/60) * 6;
+                    const secAngle = s * 6;
+                    // Hour hand
+                    hands.innerHTML = `
+                        <rect x='77' y='40' width='6' height='42' rx='3' fill='#4338ca' transform='rotate(${hourAngle} 80 80)'/>
+                        <rect x='78.5' y='28' width='3' height='52' rx='1.5' fill='#10b981' transform='rotate(${minAngle} 80 80)'/>
+                        <rect x='79.5' y='18' width='1' height='62' rx='0.5' fill='#f59e42' transform='rotate(${secAngle} 80 80)'/>
+                    `;
+                }
+                function updateClock() {
+                    const now = new Date();
+                    if(!isAnalog) {
+                        clockDisplay.style.display = '';
+                        analogClock.style.display = 'none';
+                        clockDisplay.textContent = now.toLocaleTimeString();
+                    } else {
+                        clockDisplay.style.display = 'none';
+                        analogClock.style.display = '';
+                        renderAnalogClock(now);
+                    }
+                    // Alarm check
+                    if(alarmSet) {
+                        const [h, m] = alarmSet.split(':').map(Number);
+                        if(now.getHours() === h && now.getMinutes() === m && now.getSeconds() === 0) {
+                            alarmStatus.textContent = '⏰ Alarm!';
+                            if(!alarmAudio) {
+                                alarmAudio = new Audio('https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae5b2.mp3');
+                                alarmAudio.loop = true;
+                            }
+                            alarmAudio.play();
+                            if(window.Notification && Notification.permission === 'granted') {
+                                new Notification('⏰ Alarm!', { body: 'Time is up!' });
+                            }
+                            clearTimeout(alarmTimeout);
+                            alarmTimeout = setTimeout(() => {
+                                alarmAudio && alarmAudio.pause();
+                                alarmStatus.textContent = '';
+                            }, 20000);
+                            alarmSet = null;
+                        }
+                    }
+                }
+                updateClock();
+                window.clockInterval && clearInterval(window.clockInterval);
+                window.clockInterval = setInterval(updateClock, 1000);
+                // Toggle digital/analog
+                toggleClockType.onclick = function() {
+                    isAnalog = !isAnalog;
+                    toggleClockType.textContent = isAnalog ? 'Switch to Digital' : 'Switch to Analog';
+                    updateClock();
+                };
+                // Theme toggle
+                toggleClockTheme.onclick = function() {
+                    isDark = !isDark;
+                    document.getElementById('clockArea').style.background = isDark ? '#222' : '';
+                    document.getElementById('clockArea').style.color = isDark ? '#fff' : '';
+                    updateClock();
+                };
+                // Alarm set
+                setAlarmBtn.onclick = function() {
+                    if(alarmTime.value) {
+                        alarmSet = alarmTime.value;
+                        alarmStatus.textContent = `Alarm set for ${alarmSet}`;
+                        if(window.Notification && Notification.permission !== 'granted') {
+                            Notification.requestPermission();
+                        }
+                    }
+                };
+            } else if(feature === 'quotes') {
+                const quoteDisplay = document.getElementById('quoteDisplay');
+                const generateBtn = document.getElementById('generateQuoteBtn');
+                async function generateMotivationalQuote() {
+                    quoteDisplay.textContent = 'Generating...';
+                    // Simulate AI bot by combining random motivational patterns
+                    const beginnings = [
+                        'Believe in yourself,',
+                        'Every day is a new opportunity,',
+                        'Success comes to those who',
+                        'Your journey begins when you',
+                        'Greatness is achieved by those who',
+                        'Dream big and',
+                        'Stay positive and',
+                        'Push your limits and',
+                        'Remember,',
+                        'Never forget to'
+                    ];
+                    const middles = [
+                        'never give up.',
+                        'embrace challenges.',
+                        'work hard in silence.',
+                        'turn dreams into reality.',
+                        'keep moving forward.',
+                        'learn from every failure.',
+                        'believe in the impossible.',
+                        'make today count.',
+                        'shine your brightest.',
+                        'inspire others.'
+                    ];
+                    const endings = [
+                        'You are unstoppable!',
+                        'The best is yet to come.',
+                        'Your potential is limitless.',
+                        'You can do it!',
+                        'Let your actions speak.',
+                        'Success is yours to claim.',
+                        'Keep going!',
+                        'You are your only limit.',
+                        'Rise and conquer.',
+                        'Make it happen!'
+                    ];
+                    // Randomly combine
+                    const quote = `${beginnings[Math.floor(Math.random()*beginnings.length)]} ${middles[Math.floor(Math.random()*middles.length)]} ${endings[Math.floor(Math.random()*endings.length)]}`;
+                    // Simulate AI typing effect
+                    quoteDisplay.textContent = '';
+                    for(let i=0; i<quote.length; i++) {
+                        await new Promise(r=>setTimeout(r, 18));
+                        quoteDisplay.textContent += quote[i];
+                    }
+                }
+                generateMotivationalQuote();
+                if(generateBtn) {
+                    generateBtn.onclick = generateMotivationalQuote;
+                }
+            } else if(feature === 'routine') {
+                window.clockInterval && clearInterval(window.clockInterval);
+                const routineFormLocal = document.getElementById('routineFormLocal');
+                const routineResultLocal = document.getElementById('routineResultLocal');
+                const aiChatForm = document.getElementById('aiChatForm');
+                const aiChatInput = document.getElementById('aiChatInput');
+                const aiChatHistory = document.getElementById('aiChatHistory');
+                let lastRoutine = null;
+                if(routineFormLocal) {
+                    routineFormLocal.onsubmit = function(e) {
+                        e.preventDefault();
+                        routineResultLocal.innerHTML = 'Generating your daily routine...';
+                        const formData = new FormData(routineFormLocal);
+                        const userInput = {
+                            class: formData.get('class'),
+                            exam: formData.get('exam'),
+                            gender: formData.get('gender'),
+                            hours: formData.get('hours')
+                        };
+                        let wake = '6:00 AM', sleep = '10:00 PM';
+                        let schoolStart = 8, schoolEnd = 14;
+                        let totalStudy = parseInt(userInput.hours);
+                        let studyTopics = ['Math', 'Science', 'English', 'History', 'Language', 'Revision'];
+                        let routine = [];
+                        routine.push(`Wake up: ${wake}`);
+                        routine.push('6:30 AM - 7:00 AM: Morning routine & breakfast');
+                        routine.push('7:00 AM - 8:00 AM: Prepare for school');
+                        routine.push('8:00 AM - 2:00 PM: School/Classes');
+                        routine.push('2:00 PM - 2:30 PM: Lunch & rest');
+                        let studyStart = 15;
+                        let studyBlockLen = Math.max(1, Math.floor(totalStudy / 3));
+                        for(let i=0; i<3; i++) {
+                            let topic = studyTopics[i % studyTopics.length];
+                            routine.push(`${studyStart}:00 - ${studyStart + studyBlockLen}:00 Study Session (${topic})`);
+                            routine.push(`${studyStart + studyBlockLen}:00 - ${studyStart + studyBlockLen + 1}:00 Break/Snack`);
+                            studyStart = studyStart + studyBlockLen + 1;
+                        }
+                        routine.push('19:00 - 20:00 Dinner & family time');
+                        routine.push('20:00 - 21:00 Light revision or reading');
+                        routine.push('21:00 - 22:00 Relax, prepare for bed');
+                        routine.push(`Sleep: ${sleep}`);
+                        lastRoutine = {
+                            wake, sleep, routine,
+                            class: userInput.class,
+                            exam: userInput.exam,
+                            gender: userInput.gender,
+                            hours: userInput.hours,
+                            studyTopics
+                        };
+                        // Use interactive renderer
+                        renderRoutineInteractive(lastRoutine.routine, routineResultLocal, function() {
+                            renderRoutineInteractive(lastRoutine.routine, routineResultLocal, arguments.callee);
+                        });
+                        if(aiChatHistory) aiChatHistory.innerHTML = '';
+                    }
+                }
+                // Routine AI logic (in routine tab)
+                if(aiChatForm && aiChatInput && aiChatHistory) {
+                    aiChatForm.onsubmit = async function(e) {
+                        e.preventDefault();
+                        const userMsg = aiChatInput.value.trim();
+                        if(!userMsg) return;
+                        aiChatHistory.innerHTML += `<div class='user-msg'><b>You:</b> ${userMsg}</div>`;
+                        let botMsg = '';
+                        let handled = false;
+                        // Greeting/casual conversation support
+                        const greetings = [
+                            /^(hi|hello|hey|yo|sup|what's up|whats up|howdy|good morning|good afternoon|good evening)[!., ]*$/i,
+                            /how are you/i,
+                            /how's it going/i,
+                            /what's going on/i,
+                            /what are you doing/i
+                        ];
+                        const friendlyReplies = [
+                            "Hello! 😊 How can I help you today?",
+                            "Hi there! Ready to study?",
+                            "Hey! Need any motivation or help with your routine?",
+                            "What's up! I'm here to help you study smarter.",
+                            "Hi! Ask me anything about your study plan or just say hello!",
+                            "Hello! Let's make today productive.",
+                            "Hey! How can I assist you on your learning journey?",
+                            "Hi! I'm your AI Study Helper. How can I help?",
+                            "Hello! Hope you're having a great day!"
+                        ];
+                        // Affirmation/acknowledgment support
+                        const affirmations = [
+                            /^(yes|yeah|yep|yup|ok|okay|sure|alright|thanks|thank you|cool|great|awesome|got it|sounds good|nice|fine|good|no problem|roger|affirmative)[!., ]*$/i
+                        ];
+                        const affirmationReplies = [
+                            "You're welcome! 😊 Let me know if you need anything else.",
+                            "Glad to help! If you have more questions, just ask!",
+                            "Awesome! 👍 Keep going!",
+                            "Great! Let me know if you need more help.",
+                            "No problem! I'm here whenever you need me.",
+                            "Happy to help! Stay motivated!",
+                            "Sure thing! If you want a motivational quote or study tip, just ask!",
+                            "Alright! Let me know if you want to chat more or need advice."
+                        ];
+                        if (greetings.some(re => re.test(userMsg))) {
+                            botMsg = friendlyReplies[Math.floor(Math.random()*friendlyReplies.length)];
+                            handled = true;
+                        }
+                        // Handle affirmations
+                        if (!handled && affirmations.some(re => re.test(userMsg))) {
+                            botMsg = affirmationReplies[Math.floor(Math.random()*affirmationReplies.length)];
+                            handled = true;
+                        }
+                        // Motivational quote
+                        if(!handled && /motivat(e|ion|ional)|inspir(e|ation|ational)|quote/i.test(userMsg)) {
+                            const beginnings = [
+                                'Believe in yourself,',
+                                'Every day is a new opportunity,',
+                                'Success comes to those who',
+                                'Your journey begins when you',
+                                'Greatness is achieved by those who',
+                                'Dream big and',
+                                'Stay positive and',
+                                'Push your limits and',
+                                'Remember,',
+                                'Never forget to'
+                            ];
+                            const middles = [
+                                'never give up.',
+                                'embrace challenges.',
+                                'work hard in silence.',
+                                'turn dreams into reality.',
+                                'keep moving forward.',
+                                'learn from every failure.',
+                                'believe in the impossible.',
+                                'make today count.',
+                                'shine your brightest.',
+                                'inspire others.'
+                            ];
+                            const endings = [
+                                'You are unstoppable!',
+                                'The best is yet to come.',
+                                'Your potential is limitless.',
+                                'You can do it!',
+                                'Let your actions speak.',
+                                'Success is yours to claim.',
+                                'Keep going!',
+                                'You are your only limit.',
+                                'Rise and conquer.',
+                                'Make it happen!'
+                            ];
+                            botMsg = `${beginnings[Math.floor(Math.random()*beginnings.length)]} ${middles[Math.floor(Math.random()*middles.length)]} ${endings[Math.floor(Math.random()*endings.length)]}`;
+                            handled = true;
+                        }
+                        // Built-in definitions for common 'what is ...' questions
+                        if(!handled && /^what is (.+)/i.test(userMsg)) {
+                            const term = userMsg.match(/^what is (.+)/i)[1].trim().toLowerCase();
+                            const definitions = {
+                                'cell': 'A cell is the basic structural, functional, and biological unit of all living organisms.',
+                                'computer': 'A computer is an electronic device that processes data and performs tasks according to a set of instructions called a program.',
+                                'photosynthesis': 'Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize foods from carbon dioxide and water.',
+                                'atom': 'An atom is the smallest unit of ordinary matter that forms a chemical element.',
+                                'ecosystem': 'An ecosystem is a community of interacting organisms and their physical environment.',
+                                'mitochondria': 'Mitochondria are membrane-bound cell organelles that generate most of the chemical energy needed to power the cell’s biochemical reactions.',
+                                'internet': 'The Internet is a global network that connects millions of private, public, academic, business, and government networks.',
+                                'ai': 'AI (Artificial Intelligence) is the simulation of human intelligence in machines that are programmed to think and learn.'
+                            };
+                            if(definitions[term]) {
+                                botMsg = definitions[term];
+                                handled = true;
+                            }
+                        }
+                        // Routine AI: handle routine editing and study questions
+                        if(!handled && lastRoutine) {
+                            // Add study session
+                            if(/add study (.+)/i.test(userMsg)) {
+                                const match = userMsg.match(/add study (.+)/i);
+                                const subject = match[1].trim();
+                                lastRoutine.routine.splice(-4, 0, `17:00 - 18:00 Study Session (${subject})`);
+                                botMsg = `Added a study session for ${subject} at 5-6 PM.`;
+                                routineResultLocal.innerHTML = `<b>Your Intelligent Daily Routine (AI ChatBot):</b><br><pre style='white-space:pre-wrap;'>${lastRoutine.routine.join('\n')}</pre>`;
+                                handled = true;
+                            }
+                            // Remove session
+                            else if(/remove (.+)/i.test(userMsg)) {
+                                const match = userMsg.match(/remove (.+)/i);
+                                const keyword = match[1].trim();
+                                let removed = false;
+                                lastRoutine.routine = lastRoutine.routine.filter(line => {
+                                    if(!removed && line.toLowerCase().includes(keyword.toLowerCase())) {
+                                        removed = true;
+                                        return false;
+                                    }
+                                    return true;
+                                });
+                                botMsg = removed ? `Removed '${keyword}' from your routine.` : `Could not find '${keyword}' in your routine.`;
+                                routineResultLocal.innerHTML = `<b>Your Intelligent Daily Routine (AI ChatBot):</b><br><pre style='white-space:pre-wrap;'>${lastRoutine.routine.join('\n')}</pre>`;
+                                handled = true;
+                            }
+                            // Change wake up time
+                            else if(/change wake up to (\d{1,2}) ?(am|pm)/i.test(userMsg)) {
+                                const match = userMsg.match(/change wake up to (\d{1,2}) ?(am|pm)/i);
+                                let hour = parseInt(match[1]);
+                                let period = match[2].toLowerCase();
+                                if(period === 'pm' && hour < 12) hour += 12;
+                                if(period === 'am' && hour === 12) hour = 0;
+                                lastRoutine.routine[0] = `Wake up: ${hour > 12 ? hour-12 : hour}:00 ${period.toUpperCase()}`;
+                                botMsg = `Wake up time changed to ${hour > 12 ? hour-12 : hour}:00 ${period.toUpperCase()}.`;
+                                routineResultLocal.innerHTML = `<b>Your Intelligent Daily Routine (AI ChatBot):</b><br><pre style='white-space:pre-wrap;'>${lastRoutine.routine.join('\n')}</pre>`;
+                                handled = true;
+                            }
+                            // School time update
+                            else if(/my school( is)? at ?(\d{1,2})(?::(\d{2}))? ?(am|pm)? ?to ?(\d{1,2})(?::(\d{2}))? ?(am|pm)?/i.test(userMsg)) {
+                                const match = userMsg.match(/my school( is)? at ?(\d{1,2})(?::(\d{2}))? ?(am|pm)? ?to ?(\d{1,2})(?::(\d{2}))? ?(am|pm)?/i);
+                                if (match && lastRoutine) {
+                                    let startHour = parseInt(match[2]);
+                                    let startMin = match[3] ? parseInt(match[3]) : 0;
+                                    let startPeriod = match[4] ? match[4].toLowerCase() : null;
+                                    let endHour = parseInt(match[5]);
+                                    let endMin = match[6] ? parseInt(match[6]) : 0;
+                                    let endPeriod = match[7] ? match[7].toLowerCase() : null;
+                                    if(startPeriod === 'pm' && startHour < 12) startHour += 12;
+                                    if(startPeriod === 'am' && startHour === 12) startHour = 0;
+                                    if(endPeriod === 'pm' && endHour < 12) endHour += 12;
+                                    if(endPeriod === 'am' && endHour === 12) endHour = 0;
+                                    lastRoutine.routine = lastRoutine.routine.filter(line => !/school|class|college/i.test(line));
+                                    let prepIdx = lastRoutine.routine.findIndex(line => /prepare for school/i.test(line));
+                                    if(prepIdx === -1) prepIdx = 2;
+                                    lastRoutine.routine = lastRoutine.routine.slice(0, prepIdx+1);
+                                    let schoolStartStr = `${startHour.toString().padStart(2,'0')}:${startMin.toString().padStart(2,'0')}`;
+                                    let schoolEndStr = `${endHour.toString().padStart(2,'0')}:${endMin.toString().padStart(2,'0')}`;
+                                    lastRoutine.routine.push(`${schoolStartStr} - ${schoolEndStr} School/Classes`);
+                                    let lunchStart = endHour + (endMin > 0 ? 1 : 0);
+                                    let lunchStr = `${schoolEndStr} - ${(lunchStart).toString().padStart(2,'0')}:30 Lunch & rest`;
+                                    lastRoutine.routine.push(lunchStr);
+                                    let totalStudy = parseInt(lastRoutine.hours);
+                                    let studyBlockLen = Math.max(1, Math.floor(totalStudy / 3));
+                                    let studyTopics = lastRoutine.studyTopics || ['Math', 'Science', 'English', 'History', 'Language', 'Revision'];
+                                    let studyStart = lunchStart + 1;
+                                    for(let i=0; i<3; i++) {
+                                        let topic = studyTopics[i % studyTopics.length];
+                                        let blockStart = studyStart + i*(studyBlockLen+1);
+                                        let blockEnd = blockStart + studyBlockLen;
+                                        lastRoutine.routine.push(`${blockStart}:00 - ${blockEnd}:00 Study Session (${topic})`);
+                                    }
+                                    lastRoutine.routine.push('19:00 - 20:00 Dinner & family time');
+                                    lastRoutine.routine.push('20:00 - 21:00 Light revision or reading');
+                                    lastRoutine.routine.push('21:00 - 22:00 Relax, prepare for bed');
+                                    lastRoutine.routine.push(`Sleep: ${lastRoutine.sleep || '10:00 PM'}`);
+                                    botMsg = `School time set in your routine: ${schoolStartStr} - ${schoolEndStr}. The rest of your routine has been rebuilt to fit this new schedule.`;
+                                    routineResultLocal.innerHTML = `<b>Your Intelligent Daily Routine (AI ChatBot):</b><br><pre style='white-space:pre-wrap;'>${lastRoutine.routine.join('\n')}</pre>`;
+                                    handled = true;
+                                }
+                            }
+                            // Study time questions
+                            else if(/what.*study|when.*study|next.*study|should.*study/i.test(userMsg)) {
+                                // Suggest next study block
+                                const now = new Date();
+                                const hour = now.getHours();
+                                let found = false;
+                                for(const line of lastRoutine.routine) {
+                                    if(/study session/i.test(line)) {
+                                        const times = line.match(/(\d{1,2}):00/gi);
+                                        if(times && times.length >= 2) {
+                                            const start = parseInt(times[0]);
+                                            const end = parseInt(times[1]);
+                                            if(hour >= start && hour < end) {
+                                                botMsg = `You should be studying now: ${line}`;
+                                                found = true;
+                                                break;
+                                            } else if(hour < start) {
+                                                botMsg = `Your next study session is: ${line}`;
+                                                found = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                if(!found) botMsg = 'It is not your scheduled study time. Check your routine above.';
+                                handled = true;
+                            }
+                        }
+                        // Fallback: Google search link for any unanswered question
+                        if(!handled) {
+                            const query = encodeURIComponent(userMsg);
+                            const googleUrl = `https://www.google.com/search?q=${query}`;
+                            botMsg = `I couldn't find a direct answer. <a href='${googleUrl}' target='_blank' style='display:inline-block;margin-top:8px;padding:10px 18px;background:#6366f1;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;'>Click here for Google Search</a>`;
+                        }
+                        aiChatHistory.innerHTML += `<div class='ai-msg'><b>AI:</b> ${botMsg}</div>`;
+                        aiChatInput.value = '';
+                        aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
+                    }
+                }
+            } else {
+                window.clockInterval && clearInterval(window.clockInterval);
+            }
+            // Highlight active tab
+            Array.from(tabsDiv.children).forEach(btn => btn.classList.remove('active'));
+            const activeBtn = Array.from(tabsDiv.children).find(btn => btn.textContent === featureMap[feature].label);
+            if(activeBtn) activeBtn.classList.add('active');
+        }
+
+        // Floating chat bubble logic
+        const chatBubbleBtn = document.getElementById('chatBubbleBtn');
+        const chatModal = document.getElementById('chatModal');
+        const chatModalOverlay = document.getElementById('chatModalOverlay');
+        const chatModalClose = chatModal.querySelector('.close-btn');
+        // Floating chat bot (general help only, no routine editing)
+        function renderChatBotOnly() {
+            document.getElementById('aiChatBotContainer').innerHTML = `
+                <h3 style='margin-top:0;'>AI Study Helper</h3>
+                <div id='aiChatHistory' style='background:#e0e7ff;padding:22px 18px;border-radius:12px;min-height:320px;max-height:520px;overflow-y:auto;margin-bottom:18px;font-size:1.13rem;display:flex;flex-direction:column;gap:12px;'></div>
+                <form id='aiChatForm' style='display:flex;gap:10px;margin-top:8px;'>
+                    <input type='text' id='aiChatInput' placeholder='Ask for help or just say hi...' style='flex:1;padding:12px 14px;border-radius:8px;border:1.5px solid #a5b4fc;font-size:1.08rem;background:#f1f5f9;transition:border 0.2s;'>
+                    <button type='submit' class='cta' style='padding:12px 24px;font-size:1.08rem;border-radius:8px;'>Send</button>
+                </form>
+            `;
+            const aiChatForm = document.getElementById('aiChatForm');
+            const aiChatInput = document.getElementById('aiChatInput');
+            const aiChatHistory = document.getElementById('aiChatHistory');
+            aiChatForm.onsubmit = async function(e) {
+                e.preventDefault();
+                const userMsg = aiChatInput.value.trim();
+                if(!userMsg) return;
+                aiChatHistory.innerHTML += `<div class='user-msg'><b>You:</b> ${userMsg}</div>`;
+                let botMsg = '';
+                let handled = false;
+                // Greeting/casual conversation support
+                const greetings = [
+                    /^(hi|hello|hey|yo|sup|what's up|whats up|howdy|good morning|good afternoon|good evening)[!., ]*$/i,
+                    /how are you/i,
+                    /how's it going/i,
+                    /what's going on/i,
+                    /what are you doing/i
+                ];
+                const friendlyReplies = [
+                    "Hello! 😊 How can I help you today?",
+                    "Hi there! Ready to study?",
+                    "Hey! Need any motivation or help with your routine?",
+                    "What's up! I'm here to help you study smarter.",
+                    "Hi! Ask me anything about your study plan or just say hello!",
+                    "Hello! Let's make today productive.",
+                    "Hey! How can I assist you on your learning journey?",
+                    "Hi! I'm your AI Study Helper. How can I help?",
+                    "Hello! Hope you're having a great day!"
+                ];
+                // Affirmation/acknowledgment support
+                const affirmations = [
+                    /^(yes|yeah|yep|yup|ok|okay|sure|alright|thanks|thank you|cool|great|awesome|got it|sounds good|nice|fine|good|no problem|roger|affirmative)[!., ]*$/i
+                ];
+                const affirmationReplies = [
+                    "You're welcome! 😊 Let me know if you need anything else.",
+                    "Glad to help! If you have more questions, just ask!",
+                    "Awesome! 👍 Keep going!",
+                    "Great! Let me know if you need more help.",
+                    "No problem! I'm here whenever you need me.",
+                    "Happy to help! Stay motivated!",
+                    "Sure thing! If you want a motivational quote or study tip, just ask!",
+                    "Alright! Let me know if you want to chat more or need advice."
+                ];
+                if (greetings.some(re => re.test(userMsg))) {
+                    botMsg = friendlyReplies[Math.floor(Math.random()*friendlyReplies.length)];
+                    handled = true;
+                }
+                // Handle affirmations
+                if (!handled && affirmations.some(re => re.test(userMsg))) {
+                    botMsg = affirmationReplies[Math.floor(Math.random()*affirmationReplies.length)];
+                    handled = true;
+                }
+                // Built-in definitions for common 'what is ...' questions
+                if(!handled && /^what is (.+)/i.test(userMsg)) {
+                    const term = userMsg.match(/^what is (.+)/i)[1].trim().toLowerCase();
+                    const definitions = {
+                        'cell': 'A cell is the basic structural, functional, and biological unit of all living organisms.',
+                        'computer': 'A computer is an electronic device that processes data and performs tasks according to a set of instructions called a program.',
+                        'photosynthesis': 'Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize foods from carbon dioxide and water.',
+                        'atom': 'An atom is the smallest unit of ordinary matter that forms a chemical element.',
+                        'ecosystem': 'An ecosystem is a community of interacting organisms and their physical environment.',
+                        'mitochondria': 'Mitochondria are membrane-bound cell organelles that generate most of the chemical energy needed to power the cell’s biochemical reactions.',
+                        'internet': 'The Internet is a global network that connects millions of private, public, academic, business, and government networks.',
+                        'ai': 'AI (Artificial Intelligence) is the simulation of human intelligence in machines that are programmed to think and learn.'
+                    };
+                    if(definitions[term]) {
+                        botMsg = definitions[term];
+                        handled = true;
+                    }
+                }
+                // Fallback: Google search link for any unanswered question
+                if(!handled) {
+                    const query = encodeURIComponent(userMsg);
+                    const googleUrl = `https://www.google.com/search?q=${query}`;
+                    botMsg = `I couldn't find a direct answer. <a href='${googleUrl}' target='_blank' style='display:inline-block;margin-top:8px;padding:10px 18px;background:#6366f1;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;'>Click here for Google Search</a>`;
+                }
+                aiChatHistory.innerHTML += `<div class='ai-msg'><b>AI:</b> ${botMsg}</div>`;
+                aiChatInput.value = '';
+                aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
+            }
+        }
+        chatBubbleBtn.onclick = function() {
+            chatModal.style.display = 'block';
+            chatModalOverlay.style.display = 'block';
+            renderChatBotOnly();
+        };
+        chatModalOverlay.onclick = chatModalClose.onclick = function() {
+            chatModal.style.display = 'none';
+            chatModalOverlay.style.display = 'none';
+        };
+        // Back button logic
+        const backToHomeBtn = document.getElementById('backToHomeBtn');
+        const backToFeaturesBtn = document.getElementById('backToFeaturesBtn');
+        const chatModalBackBtn = document.getElementById('chatModalBackBtn');
+        if(backToHomeBtn) {
+            backToHomeBtn.onclick = function() {
+                featuresContainer.style.display = 'none';
+                homeContainer.style.display = 'block';
+                setFeatureControlsVisibility(false);
+            };
+        }
+        if(backToFeaturesBtn) {
+            backToFeaturesBtn.onclick = function() {
+                tabsContainer.style.display = 'none';
+                featuresContainer.style.display = 'block';
+            };
+        }
+        if(chatModalBackBtn) {
+            chatModalBackBtn.onclick = function() {
+                chatModal.style.display = 'none';
+                chatModalOverlay.style.display = 'none';
+            };
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            document.body.appendChild(sparkle);
+            // On page load, hide feature selection controls
+            if(homeContainer.style.display !== 'none') {
+                document.querySelectorAll('.hide-when-home').forEach(el => el.style.display = 'none');
+            }
+        });
+        // In the routine tab, after generating the routine, render each item with edit/delete buttons and allow inline editing
+        function renderRoutineInteractive(routineArr, container, updateCallback) {
+            container.innerHTML = `<b>Your Intelligent Daily Routine (AI ChatBot):</b><br>`;
+            const list = document.createElement('ul');
+            list.style.listStyle = 'none';
+            list.style.padding = '0';
+            list.style.margin = '0';
+            routineArr.forEach((item, idx) => {
+                const li = document.createElement('li');
+                li.style.display = 'flex';
+                li.style.alignItems = 'center';
+                li.style.marginBottom = '8px';
+                li.style.gap = '8px';
+                const span = document.createElement('span');
+                span.textContent = item;
+                span.style.flex = '1';
+                span.style.cursor = 'pointer';
+                // Inline edit on click
+                span.onclick = function() {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = item;
+                    input.style.flex = '1';
+                    input.style.fontSize = '1rem';
+                    input.style.padding = '4px 8px';
+                    input.style.borderRadius = '6px';
+                    input.style.border = '1px solid #a5b4fc';
+                    input.onkeydown = function(e) {
+                        if(e.key === 'Enter') {
+                            routineArr[idx] = input.value;
+                            updateCallback();
+                        }
+                    };
+                    input.onblur = function() {
+                        routineArr[idx] = input.value;
+                        updateCallback();
+                    };
+                    li.replaceChild(input, span);
+                    input.focus();
+                };
+                li.appendChild(span);
+                // Edit button
+                const editBtn = document.createElement('button');
+                editBtn.textContent = '✏️';
+                editBtn.title = 'Edit';
+                editBtn.style.border = 'none';
+                editBtn.style.background = 'none';
+                editBtn.style.cursor = 'pointer';
+                editBtn.onclick = function() { span.onclick(); };
+                li.appendChild(editBtn);
+                // Delete button
+                const delBtn = document.createElement('button');
+                delBtn.textContent = '🗑️';
+                delBtn.title = 'Delete';
+                delBtn.style.border = 'none';
+                delBtn.style.background = 'none';
+                delBtn.style.cursor = 'pointer';
+                delBtn.onclick = function() {
+                    routineArr.splice(idx, 1);
+                    updateCallback();
+                };
+                li.appendChild(delBtn);
+                list.appendChild(li);
+            });
+            container.appendChild(list);
+        }
+        // --- AI Chat Bot Google Search Helper ---
+        async function googleSearchTopResult(query) {
+            // Use a public CORS proxy to fetch Google search results
+            const url =
+                'https://corsproxy.io/?' +
+                encodeURIComponent('https://www.google.com/search?q=' + encodeURIComponent(query));
+            try {
+                const resp = await fetch(url, { headers: { 'x-requested-with': 'XMLHttpRequest' } });
+                const html = await resp.text();
+                // Parse the first result
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                // Try to find organic result links
+                let a = doc.querySelector('a[href^="/url?q="]');
+                if (a) {
+                    let href = a.getAttribute('href');
+                    let urlMatch = href.match(/\/url\?q=([^&]+)/);
+                    let link = urlMatch ? decodeURIComponent(urlMatch[1]) : null;
+                    let title = a.textContent.trim() || link;
+                    if (link) {
+                        return { link, title };
+                    }
+                }
+                // Fallback: just link to the search page
+                return { link: 'https://www.google.com/search?q=' + encodeURIComponent(query), title: 'Google Search Results' };
+            } catch (e) {
+                return { link: 'https://www.google.com/search?q=' + encodeURIComponent(query), title: 'Google Search Results' };
+            }
+        }
+    </script>
+</body>
+</html>
