@@ -46,7 +46,7 @@ def chat_endpoint(req: ChatRequest):
 def research_endpoint(req: ChatRequest):
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-3.0-flash",
             contents=f"Find helpful study notes, textbook resources, and direct download PDF links for: {req.message}",
             config=types.GenerateContentConfig(
                 tools=[{"google_search": {}}], # Corrected tool syntax
