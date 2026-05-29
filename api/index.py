@@ -29,28 +29,31 @@ class TopicRequest(BaseModel):
 @app.post("/api/chat")
 def chat_endpoint(req: ChatRequest):
     try:
-        # Corrected to snake_case: generate_content
+        # Upgraded to the new Gemini 3.5 Flash model
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-3.5-flash",
             contents=req.message,
             config=types.GenerateContentConfig(
-                system_instruction="You are a brilliant, clear, and encouraging personal academic tutor specializing in high school curriculums."
+                # Gemini 3 feature: Sets the depth of internal reasoning
+                thinking_level="low", 
+                system_instruction="You are an expert personal academic tutor specializing in high school curriculums."
             )
         )
         return {"reply": response.text}
     except Exception as e:
-        print(f"Chat Error: {str(e)}") # This prints to your Vercel Logs
+        print(f"Chat Error: {str(e)}") 
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/research")
 def research_endpoint(req: ChatRequest):
     try:
         response = client.models.generate_content(
-            model="gemini-3.0-flash",
+            model="gemini-3.5-flash",
             contents=f"Find helpful study notes, textbook resources, and direct download PDF links for: {req.message}",
             config=types.GenerateContentConfig(
-                tools=[{"google_search": {}}], # Corrected tool syntax
-                system_instruction="You are a specialized educational research assistant. Scan live search indexes to discover academic notes, guides, and direct PDF links. Present sources explicitly with titles and clickable text URLs."
+                tools=[{"google_search": {}}], 
+                thinking_level="low",
+                system_instruction="You are an educational research assistant. Scan live search indexes to discover academic notes, guides, and direct PDF links. Present sources explicitly with titles and clickable text URLs."
             )
         )
         return {"reply": response.text}
@@ -64,7 +67,7 @@ def generate_cards_endpoint(req: TopicRequest):
         prompt = f"Generate exactly 4 distinct high-yield study flashcards for the topic: {req.topic}. You must output valid raw JSON matching this structure: [{{\"f\": \"Question or core term\", \"b\": \"Clear, concise explanation or definition\"}}, ...]"
         
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-3.5-flash",
             contents=prompt,
             config=types.GenerateContentConfig(
                 response_mime_type="application/json",
